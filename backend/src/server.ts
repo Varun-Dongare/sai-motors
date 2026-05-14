@@ -13,7 +13,14 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5006;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173", // So it still works on your computer
+    "https://sai-motors-alpha.vercel.app" // Your live frontend
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 
 // ==========================================
