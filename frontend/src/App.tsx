@@ -37,8 +37,7 @@ function App() {
   const [empForm, setEmpForm] = useState({ name: '', phone: '', role: 'Mechanic', dailyWage: '' });
   const [attForm, setAttForm] = useState({ employeeId: '', date: new Date().toISOString().split('T')[0], status: 'Present', advanceGiven: '', notes: '' });
 
-  const API_BASE = "http://localhost:5006/api";
-
+const API_BASE = "https://sai-motors-api.onrender.com/api";
   const fetchData = async () => {
     try {
       const invRes = await fetch(`${API_BASE}/inventory/all`).then(r => r.json()).catch(() => []);
