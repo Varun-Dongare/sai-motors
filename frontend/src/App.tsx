@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+const [sidebarOpen, setSidebarOpen] = useState(true);
 // --- INTERFACES ---
 interface Part { _id: string; partName: string; partNumber: string; category: string; quantityInStock: number; costPrice: number; sellingPrice: number; }
 interface Customer { _id: string; customerName: string; contactNumber: string; email: string; address: string; vehicleNumber: string; vehicleModel: string; }
@@ -578,17 +578,51 @@ const API_BASE = "https://sai-motors-api.onrender.com/api";
     );
   };
 
-  return (
+return (
     <div className="flex h-screen bg-gray-100 font-sans">
-      <div className="w-64 bg-slate-900 text-white p-6 shadow-2xl flex flex-col print:hidden">
-        <h1 className="text-2xl font-black text-blue-400 mb-10 border-b border-slate-800 pb-4">SAI MOTORS</h1>
-        <nav className="space-y-4 flex-1">
-          <button onClick={() => setActiveTab('inventory')} className={`w-full text-left p-3 rounded-xl font-bold transition-all ${activeTab === 'inventory' ? 'bg-blue-600 shadow-lg' : 'hover:bg-slate-800'}`}>📦 Inventory</button>
-          <button onClick={() => setActiveTab('customers')} className={`w-full text-left p-3 rounded-xl font-bold transition-all ${activeTab === 'customers' ? 'bg-indigo-600 shadow-lg' : 'hover:bg-slate-800'}`}>👥 Customers</button>
-          <button onClick={() => setActiveTab('jobcards')} className={`w-full text-left p-3 rounded-xl font-bold transition-all ${activeTab === 'jobcards' ? 'bg-emerald-600 shadow-lg' : 'hover:bg-slate-800'}`}>📄 Job Cards</button>
-          <button onClick={() => setActiveTab('employees')} className={`w-full text-left p-3 rounded-xl font-bold transition-all mt-8 border-t border-slate-700 ${activeTab === 'employees' ? 'bg-orange-600 shadow-lg' : 'hover:bg-slate-800 text-orange-200'}`}>🛠️ Staff & Payroll</button>
+      
+      {/* --- COLLAPSIBLE SIDEBAR --- */}
+      <div className={`${sidebarOpen ? 'w-64' : 'w-20'} transition-all duration-300 bg-slate-900 text-white py-6 flex flex-col shadow-2xl print:hidden`}>
+        
+        {/* Header & Hamburger Icon */}
+        <div className={`flex items-center mb-10 border-b border-slate-800 pb-4 px-4 ${sidebarOpen ? 'justify-between' : 'justify-center'}`}>
+          {sidebarOpen && <h1 className="text-2xl font-black text-blue-400">SAI MOTORS</h1>}
+          <button 
+            onClick={() => setSidebarOpen(!sidebarOpen)} 
+            className="p-2 rounded-lg hover:bg-slate-800 transition-colors text-gray-300"
+            title="Toggle Sidebar"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Navigation Links */}
+        <nav className="space-y-4 flex-1 px-4">
+          <button title="Inventory" onClick={() => setActiveTab('inventory')} className={`w-full flex items-center p-3 rounded-xl font-bold transition-all ${activeTab === 'inventory' ? 'bg-blue-600 shadow-lg' : 'hover:bg-slate-800'} ${!sidebarOpen && 'justify-center'}`}>
+            <span className="text-xl">📦</span>
+            {sidebarOpen && <span className="ml-3">Inventory</span>}
+          </button>
+          
+          <button title="Customers" onClick={() => setActiveTab('customers')} className={`w-full flex items-center p-3 rounded-xl font-bold transition-all ${activeTab === 'customers' ? 'bg-indigo-600 shadow-lg' : 'hover:bg-slate-800'} ${!sidebarOpen && 'justify-center'}`}>
+            <span className="text-xl">👥</span>
+            {sidebarOpen && <span className="ml-3">Customers</span>}
+          </button>
+          
+          <button title="Job Cards" onClick={() => setActiveTab('jobcards')} className={`w-full flex items-center p-3 rounded-xl font-bold transition-all ${activeTab === 'jobcards' ? 'bg-emerald-600 shadow-lg' : 'hover:bg-slate-800'} ${!sidebarOpen && 'justify-center'}`}>
+            <span className="text-xl">📄</span>
+            {sidebarOpen && <span className="ml-3">Job Cards</span>}
+          </button>
+          
+          <button title="Staff & Payroll" onClick={() => setActiveTab('employees')} className={`w-full flex items-center p-3 rounded-xl font-bold transition-all mt-8 border-t border-slate-700 ${activeTab === 'employees' ? 'bg-orange-600 shadow-lg' : 'hover:bg-slate-800 text-orange-200'} ${!sidebarOpen && 'justify-center'}`}>
+            <span className="text-xl">🛠️</span>
+            {sidebarOpen && <span className="ml-3">Staff & Payroll</span>}
+          </button>
         </nav>
       </div>
+
+      {/* --- MAIN CONTENT AREA --- */}
       <div className="flex-1 p-10 overflow-y-auto print:p-0">
         {loading ? (
           <div className="h-full flex items-center justify-center font-black text-gray-300 text-2xl animate-pulse">BOOTING SAI MOTORS...</div>
@@ -599,6 +633,7 @@ const API_BASE = "https://sai-motors-api.onrender.com/api";
           renderJobCards()
         )}
       </div>
+      
       {showModal && renderReceiptModal()}
     </div>
   );
