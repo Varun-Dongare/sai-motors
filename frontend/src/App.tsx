@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const [sidebarOpen, setSidebarOpen] = useState(true);
+
 // --- INTERFACES ---
 interface Part { _id: string; partName: string; partNumber: string; category: string; quantityInStock: number; costPrice: number; sellingPrice: number; }
 interface Customer { _id: string; customerName: string; contactNumber: string; email: string; address: string; vehicleNumber: string; vehicleModel: string; }
@@ -8,10 +8,15 @@ interface Attendance { date: string; status: string; advanceGiven: number; notes
 interface Employee { _id: string; name: string; phone: string; role: string; dailyWage: number; attendanceRecords: Attendance[]; }
 
 function App() {
+  // Move it here! 👇
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  
   const [activeTab, setActiveTab] = useState('jobcards');
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedInv, setSelectedInv] = useState<Invoice | null>(null);
+
+  // ... rest of your code stays the same
 
   // --- DATA ---
   const [inventory, setInventory] = useState<Part[]>([]);
@@ -37,7 +42,7 @@ function App() {
   const [empForm, setEmpForm] = useState({ name: '', phone: '', role: 'Mechanic', dailyWage: '' });
   const [attForm, setAttForm] = useState({ employeeId: '', date: new Date().toISOString().split('T')[0], status: 'Present', advanceGiven: '', notes: '' });
 
-const API_BASE = "https://sai-motors-api.onrender.com/api";
+const API_BASE = "http://localhost:5006/api";
   const fetchData = async () => {
     try {
       const invRes = await fetch(`${API_BASE}/inventory/all`).then(r => r.json()).catch(() => []);
