@@ -175,7 +175,7 @@ const API_BASE = "https://sai-motors-api.onrender.com/api";
           <input type="text" placeholder="Part Name" value={inventoryForm.partName} onChange={e => setInventoryForm({...inventoryForm, partName: capitalize(e.target.value)})} className="border p-2 rounded" required />
           <input type="text" placeholder="Part Number" value={inventoryForm.partNumber} onChange={e => setInventoryForm({...inventoryForm, partNumber: e.target.value.toUpperCase()})} className="border p-2 rounded" required />
           <select value={inventoryForm.category} onChange={e => setInventoryForm({...inventoryForm, category: e.target.value})} className="border p-2 rounded bg-white">
-            <option value="Engine Parts">Engine Parts</option><option value="Fluids">Fluids</option><option value="Electrical">Electrical</option>
+            <option value="Engine Parts">Engine Parts</option><option value="Fluids">Fluids</option><option value="Electrical">Electrical</option><option value="Brakes">Brakes</option><option value="Suspension">Suspension</option><option value="Body Parts">Body Parts</option><option value="Accessories">Accessories</option>
           </select>
           <input type="number" placeholder="Stock" value={inventoryForm.quantityInStock} onChange={e => setInventoryForm({...inventoryForm, quantityInStock: e.target.value})} className="border p-2 rounded" required />
           <input type="number" placeholder="Cost Price (₹)" value={inventoryForm.costPrice} onChange={e => setInventoryForm({...inventoryForm, costPrice: e.target.value})} className="border p-2 rounded" required />
